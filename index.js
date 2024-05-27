@@ -46,5 +46,18 @@ app.get('/productos/categoria/:categoria', (req, res) => {
 });
 
 
+app.get('/productos/categorias', (req, res) => {
+    const conteoCategorias = productos.reduce((acc, producto) => {
+        if (acc[producto.categoria]) {
+            acc[producto.categoria]++;
+        } else {
+            acc[producto.categoria] = 1;
+        }
+        return acc;
+    }, {});
+    res.send(conteoCategorias);
+});
+
+
 const port = process.env.PORT || 3232;
 app.listen(port, () => console.log(`escuchando en el puerto ${port}...`));

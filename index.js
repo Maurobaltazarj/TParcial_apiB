@@ -83,6 +83,13 @@ app.get('/productos/categorias', (req, res) => {
 });
 
 
+app.get('/productos/promedio'){
+    const precioUnitario = productos.map(p => p.precio);
+    const total = 0 + precioUnitario;
+    res.send(total);
+}
+
+
 // creamos ruta post para poder realizar cambios mediante el id del producto
 app.post('/produtos/codificar/:id/nombre', (req, res) => {
     // creamos el producto
@@ -98,6 +105,9 @@ app.post('/produtos/codificar/:id/nombre', (req, res) => {
     // refrescamos la base
     res.send(productos);
 });
+
+
+
 // creamos el puerto
 const port = process.env.PORT || 3232;
 app.listen(port, () => console.log(`escuchando en el puerto ${port}...`));

@@ -84,9 +84,11 @@ app.get('/productos/categorias', (req, res) => {
 
 
 app.get('/productos/promedio', (req, res) => {
-    const precioUnitario = productos.map(p => p.precio);
-    const total = 0 + precioUnitario;
-    res.send(total);
+    const precioUnitario = productos.filter(p => p.precio === req.query.categoria);
+    const sumaPrecios= precioUnitario.reduce((sum, producto) => sum + producto.precio, 0);
+    const precioPromedio = sumaPrecios / precioUnitario.length;
+
+    res.send({promedio: precioPromedio});
 });
 
 

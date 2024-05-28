@@ -84,11 +84,25 @@ app.get('/productos/categorias', (req, res) => {
 
 
 app.get('/productos/promedio', (req, res) => {
-    const precioUnitario = productos.filter(p => p.precio === req.query.categoria);
-    const sumaPrecios= precioUnitario.reduce((sum, producto) => sum + producto.precio, 0);
-    const precioPromedio = sumaPrecios / precioUnitario.length;
 
-    res.send({promedio: precioPromedio});
+    let productosFiltrados = productos;
+
+    // Filtrar por categoría si se proporciona como query parameter
+    if (req.query.categoria) {
+        productosFiltrados = productos.filter(p => p.categoria === req.query.categoria);
+    }
+
+    // Verificar si hay productos después de filtrar
+    if (productosFiltrados.length === 0) {
+        return res.status(404).send('No se encontraron productos en la categoría especificada');
+    }
+
+    // Calcular el precio promedio
+    const sumaPrecios = productosFiltrados.reduce((sum, producto) => sum + producto.precio, 0);
+    const precioPromedio = sumaPrecios / productosFiltrados.length;
+
+    // Enviar la respuesta con el precio promedio
+    res.send({ promedio: precioPromedio });
 });
 
 

@@ -83,11 +83,11 @@ app.get('/productos/categorias', (req, res) => {
 });
 
 
-app.get('/productos/promedio'){
+app.get('/productos/promedio', (req, res) => {
     const precioUnitario = productos.map(p => p.precio);
     const total = 0 + precioUnitario;
     res.send(total);
-}
+});
 
 
 // creamos ruta post para poder realizar cambios mediante el id del producto
